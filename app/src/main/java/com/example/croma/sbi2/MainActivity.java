@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -151,7 +153,10 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 progressBar.setVisibility(View.GONE);
-                responseView.setText(result);
+                Gson gson = new Gson();
+                Customer customer_details = gson.fromJson(result,Customer.class);
+                 String b = customer_details.getReferenceNumber();
+                responseView.setText(b);
             }
           //  Log.i("INFO", result);
           //  responseView.setText(result);
