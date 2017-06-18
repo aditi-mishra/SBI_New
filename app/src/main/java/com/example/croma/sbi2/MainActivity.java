@@ -35,18 +35,19 @@ import java.io.InputStreamReader;
         import java.net.URL;
 
 
+import static com.example.croma.sbi2.R.id.account;
 import static java.lang.System.in;
 
 
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText account;
+    EditText acc_no;
     TextView responseView;
     ProgressBar progressBar;
     String acc;
     static final String API_KEY = "NPCITeam010";
-    static final String API_URL = "http://52.172.213.166:8080/sbi/CustDet/api/EnqCustomerDetails";
+    static final String API_URL1 = "http://52.172.213.166:8080/sbi/Account_List/api/EnqBancsAccountsList/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         responseView = (TextView) findViewById(R.id.responseView);
-        account = (EditText) findViewById(R.id.account);
+        acc_no = (EditText) findViewById(account);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-         acc = account.getText().toString();
+
 
         Button queryButton = (Button) findViewById(R.id.queryButton);
         queryButton.setOnClickListener(new View.OnClickListener() {
@@ -75,21 +76,23 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             responseView.setText("");
+
+            acc = acc_no.getText().toString();
         }
 
         protected String doInBackground(Void... args) {
           // HttpURLConnection urlConnection = null;
             String json = null;
-//
+
             // String result="";
             try {
                 HttpResponse response;
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("AccountNumber", "00000085001410583");
+                jsonObject.accumulate("AccountNumber", acc);
                 //jsonObject.accumulate("password", password);
                 json = jsonObject.toString();
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(API_URL);
+                HttpPost httpPost = new HttpPost(API_URL1);
                 httpPost.setEntity(new StringEntity(json, "UTF-8"));
                 httpPost.setHeader("Content-Type", "application/json");
                 httpPost.setHeader("apikey", API_KEY);
@@ -104,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 String a = EntityUtils.toString(entity);
                 Log.w("QueingSystem", sresponse);
                 Log.w("QueingSystem", a );
-              //   InputStream in = httpEntity.getContent();
                 if(entity!=null){
                     String responsebody = a ;
                     return responsebody;
