@@ -81,15 +81,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected String doInBackground(Void... args) {
-          // HttpURLConnection urlConnection = null;
+
             String json = null;
 
-            // String result="";
             try {
                 HttpResponse response;
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("AccountNumber", acc);
-                //jsonObject.accumulate("password", password);
+
                 json = jsonObject.toString();
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(API_URL1);
