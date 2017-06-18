@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 
@@ -33,10 +34,8 @@ import java.io.InputStreamReader;
         import java.net.HttpURLConnection;
         import java.net.URL;
 
-import static android.R.attr.name;
-import static android.R.attr.password;
+
 import static java.lang.System.in;
-//import org.springframework.util.FileCopyUtils;
 
 
 
@@ -97,13 +96,22 @@ public class MainActivity extends AppCompatActivity {
 
 
                 httpPost.setHeader("Accept-Encoding", "application/json");
-             //   httpPost.setHeader("Accept-Language", "en-US");
 
                 response = httpClient.execute(httpPost);
-              //   InputStream in = httpEntity.getContent();
-                String sresponse = response.getEntity().toString();
+
+                HttpEntity entity = response.getEntity();
+                String sresponse = entity.toString();
+                String a = EntityUtils.toString(entity);
                 Log.w("QueingSystem", sresponse);
-                Log.w("QueingSystem", EntityUtils.toString(response.getEntity()));
+                Log.w("QueingSystem", a );
+              //   InputStream in = httpEntity.getContent();
+                if(entity!=null){
+                    String responsebody = a ;
+                    return responsebody;
+
+                }
+
+
                  return sresponse;
               //  responseView.setText(sresponse);
 //                try {
